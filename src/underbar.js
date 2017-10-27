@@ -175,8 +175,15 @@
   //     return total + number * number;
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
-  _.reduce = function(collection, iterator, accumulator) {
-
+  _.reduce = function(collection, iterator, accumulator=collection[0]) {
+      if(accumulator === collection[0]){
+        collection = collection.slice(1, collection.length)
+      }
+      var acc = accumulator;
+      _.each(collection, function(x){
+        acc = iterator(acc, x) 
+      });
+      return acc
   };
 
   // Determine if the array or object contains a given value (using `===`).
